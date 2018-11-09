@@ -2,17 +2,8 @@ class GameController
   MAX_ERRORS = 7
   attr_reader :secret_word, :good_letters, :input_letters, :errors, :game_status
 
-  def initialize
-    begin
-      current_path = File.expand_path('.')
-      file = File.open("data/dictionary.txt",'r:UTF-8')
-      dictionary = file.readlines
-      file.close
-    rescue Errno::ENOENT
-      abort "Словарь не найден."
-    end
-
-    @secret_word = dictionary.sample.chomp.split(//)
+  def initialize(secret_word)
+    @secret_word = secret_word.split(//)
     @input_letters = []
     @errors = 0
     @good_letters = []
@@ -33,10 +24,10 @@ class GameController
 
   def good_letter?(letter)
     @secret_word.include?(letter) ||
-    (letter == 'Е' && @secret_word.include?('Ё')) ||
-    (letter == 'Ё' && @secret_word.include?('Е')) ||
-    (letter == 'И' && @secret_word.include?('Й')) ||
-    (letter == 'Й' && @secret_word.include?('И'))
+    (letter == 'е' && @secret_word.include?('ё')) ||
+    (letter == 'ё' && @secret_word.include?('е')) ||
+    (letter == 'и' && @secret_word.include?('й')) ||
+    (letter == 'й' && @secret_word.include?('и'))
   end
 
   def add_to_good(letter)
