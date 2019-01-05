@@ -1,10 +1,8 @@
 class WordCreator
    def self.create_word
     word = ARGV[0]
-
     if word == nil || word == ""
       begin
-        current_path = File.expand_path('.')
         file = File.open("data/dictionary.txt",'r:UTF-8')
         dictionary = file.readlines
         file.close

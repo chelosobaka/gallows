@@ -3,13 +3,14 @@ require 'game_controller'
 
 describe 'game controller' do
   it 'wins the game' do
-    game = GameController.new('слово')
+    game = GameController.new('отлизать')
 
-    game.processing_letter('с')
-    game.processing_letter('л')
     game.processing_letter('о')
-    game.processing_letter('в')
-
+    game.processing_letter('ь')
+    game.processing_letter('л')
+    game.processing_letter('и')
+    game.processing_letter('з')
+    game.processing_letter('т')
     expect(game.game_status).to eq :won
   end
 

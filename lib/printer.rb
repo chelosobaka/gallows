@@ -19,6 +19,7 @@ class Printer
   end
 
   def processing
+    welcom
     @game.secret_word.each do |i|
       if @game.good_letters.include?(i)
         print i + "  "
@@ -27,6 +28,7 @@ class Printer
       end
     end
     puts
+    print_hangman
   end
 
   def welcom
@@ -53,9 +55,9 @@ class Printer
   def print_status
     case @game.game_status
     when :won
-      abort "Победа!"
+      puts "Победа! Слово: #{@game.secret_word.join}"
     when :lose
-      abort "Вы поиграла. Это было слово #{@game.secret_word.join}."
+      puts "Вы поиграла. Это было слово #{@game.secret_word.join}."
     when :repeat
       puts
       puts "Это уже было."
@@ -65,16 +67,5 @@ class Printer
       puts "Ввели не то, что нужно."
       puts
     end
-  end
-
-  def print_game
-    clear
-    print_input_letter
-    welcom
-    processing
-    print_hangman
-    left_errors
-    print_status
-    ask_letter
   end
 end

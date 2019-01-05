@@ -31,12 +31,17 @@ class GameController
   end
 
   def add_to_good(letter)
-    @good_letters << letter
-    case letter
-    when 'И' then @good_letters << 'Й'
-    when 'Й' then @good_letters << 'И'
-    when 'Е' then @good_letters << 'Ё'
-    when 'Ё' then @good_letters << 'Е'
+    case
+    when letter == 'и' && @secret_word.include?('й')
+      @good_letters.push('й', 'и')
+      @input_letters << 'й'
+    when letter == 'й' && @secret_word.include?('и')
+      @good_letters.push('й', 'и')
+      @input_letters << 'и'
+    when letter == 'е' && @secret_word.include?('ё') then @good_letters.push('ё', 'e')
+    when letter == 'ё' && @secret_word.include?('е') then @good_letters.push('ё', 'e')
+    else
+      @good_letters << letter
     end
   end
 
@@ -56,13 +61,16 @@ class GameController
   end
 
   def ask_letter
-    letter = STDIN.gets.downcase.chomp.encode("UTF-8")
-    @game_status = :processing
+    unless finished?
+      letter = STDIN.gets.downcase.chomp.encode("UTF-8")
+      @game_status = :processing
 
-    if letter =~ /^[а-я]{1}$/
-      processing_letter(letter)
-    else
-      @game_status = :error
+      if letter =~ /^[а-яё]{1}$/
+        processing_letter(letter)
+      else
+        @game_status = :error
+      end
+
     end
   end
 
@@ -74,4 +82,7 @@ class GameController
     MAX_ERRORS - @errors
   end
 
+  def finished?
+    @game_status == :lose || @game_status == :won
+  end
 end
