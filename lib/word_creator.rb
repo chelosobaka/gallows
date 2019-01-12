@@ -7,13 +7,13 @@ class WordCreator
         dictionary = file.readlines
         file.close
 
-        dictionary.sample.chomp
+        UnicodeUtils.downcase(dictionary.sample.chomp.encode("UTF-8"))
       rescue Errno::ENOENT
         abort "Словарь не найден."
       end
     else
       if /[а-яА-Я]{4,}/ =~ word.encode("UTF-8")
-        word.downcase.chomp.encode("UTF-8")
+        UnicodeUtils.downcase(word.chomp.encode("UTF-8"))
       else
         abort "Не меньше 4-ёх символов."
       end

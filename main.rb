@@ -1,6 +1,4 @@
-=begin
-  подключаем классы, которые распиханы по файлам.
-=end
+require "unicode_utils"
 
 require_relative 'lib/game_controller'
 require_relative 'lib/printer'
